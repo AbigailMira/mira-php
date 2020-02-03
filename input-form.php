@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<?php include("includes/head-tag-contents.php");?>
+    <?php include("includes/head-tag-contents.php");?>
 </head>
 <body>
 
@@ -12,40 +12,44 @@
 <?php require("miraControleur.php");?>
 
 
+
 <div class="container" id="main-content">
     <h2>Input form for makeup</h2>
         
-    <form name="mkp-input">
+    <form name="mkp-input" action="actions/add-item.php" method="post">
       <div class="form-group">
         <label for="itemName">Item name</label>
-        <input type="text" class="form-control" id="itemName" placeholder="example : Crash course concealing">
+        <input type="text" class="form-control" id="itemName" name="itemName" placeholder="example : Match Stix">
+      </div>
+      <div class="form-group">
+        <label for="shade">Item shade</label>
+        <input type="text" class="form-control" id="shade" name="shadeName" placeholder="example : Ivory">
       </div>
       <div class="form-group">
         <label for="brand">Select brand</label>
         
-        <select class="form-control" id="brand">
+        <select class="form-control" id="brand" name="brand" >
             <?php
             $brands = getBrands();
+            echo "<option value=".""."selected>Please select</option>";
             foreach($brands as $brand) { 
-            echo "<option value=".$brand['bra_name'].">".$brand['bra_name']." </option>";
+            echo "<option value=".$brand['idBrand'].">".$brand['bra_name']." </option>";
             }
           ?>
         </select>
       </div>
-      <div class="form-group">
-        <label for="exampleFormControlSelect2">Example multiple select</label>
-        <select multiple class="form-control" id="exampleFormControlSelect2">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
+      <div class="form-group" >
+        <label for="styles">Select style</label>
+        <select multiple class="form-control" id="styles" name="styles[]" >
+          <?php
+            $styles = getstyles();
+            foreach($styles as $style) { 
+            echo "<option value=".$style['idStyle'].">".$style['sty_name']." </option>";
+            }
+          ?>
         </select>
       </div>
-      <div class="form-group">
-        <label for="exampleFormControlTextarea1">Example textarea</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-      </div>
+      <button type="submit" class="btn btn-primary" name="submit">Submit</button>
     </form>
         
 </div>

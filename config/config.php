@@ -15,6 +15,10 @@
 			$CURRENT_PAGE = "Input form"; 
 			$PAGE_TITLE = "Input form";
 			break;
+                case "/mira-php/actions/add-item.php":
+			$CURRENT_PAGE = "Add item"; 
+			$PAGE_TITLE = "Add item";
+			break;
 		default:
 			$CURRENT_PAGE = "Index";
 			$PAGE_TITLE = "Welcome to mira-php!";

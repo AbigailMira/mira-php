@@ -1,11 +1,10 @@
 <?php
 
+require_once("db_connect.php");
+
 /* 
  * Requete pour sélectionner l'ensemble des marques (brand) enregistrées dans la db
  */
-
-require_once("db_connect.php");
-
 function getBrands() 
 {
     global $conn;
@@ -22,11 +21,62 @@ function getBrands()
     }
 }
 /* 
+ * Requete pour sélectionner l'ensemble des marques (brand) enregistrées dans la db
+ */
+function getTypes() 
+{
+    global $conn;
+    try 
+    {
+        $types = $conn->query("SELECT * 
+                                  FROM type
+                                  ORDER BY typ_name ASC")->fetchAll();
+        return $types;
+    } 
+    catch (PDOException $e) 
+    {
+        echo "Connection failed: " . $e->getMessage();
+    }
+}
+/* 
+ * Requete pour sélectionner l'ensemble des marques (brand) enregistrées dans la db
+ */
+function getPresentations() 
+{
+    global $conn;
+    try 
+    {
+        $presentations = $conn->query("SELECT * 
+                                  FROM presentation
+                                  ORDER BY pre_name ASC")->fetchAll();
+        return $presentations;
+    } 
+    catch (PDOException $e) 
+    {
+        echo "Connection failed: " . $e->getMessage();
+    }
+}
+/* 
+ * Requete pour sélectionner l'ensemble des marques (brand) enregistrées dans la db
+ */
+function getStates() 
+{
+    global $conn;
+    try 
+    {
+        $states = $conn->query("SELECT * 
+                                  FROM state
+                                  ORDER BY sta_name ASC")->fetchAll();
+        return $states;
+    } 
+    catch (PDOException $e) 
+    {
+        echo "Connection failed: " . $e->getMessage();
+    }
+}
+/* 
  * Requete pour sélectionner l'ensemble des styles d'item enregistrés dans la db
  */
-
-require_once("db_connect.php");
-
 function getStyles() 
 {
     global $conn;

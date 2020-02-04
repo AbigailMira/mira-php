@@ -30,12 +30,20 @@ try {
     $itemName = $_POST['itemName'];
     $idShade = $lastShadeId[0];
     $idBrand = $_POST['brand'];
+    $idType = $_POST['type'];
+    $idPresentation = $_POST['presentation'];
+    $idState = $_POST['state'];
     
-    $stmt = $conn->prepare("INSERT INTO item (ite_name, fk_shade, fk_brand) VALUES (:itemName, :idShade, :idBrand)");
+    $stmt = $conn->prepare("INSERT INTO item (ite_name, fk_shade, fk_brand, fk_type, fk_presentation, fk_state) 
+                            VALUES (:itemName, :idShade, :idBrand, :idType, :idPresentation, :idState)");
     
     $stmt->bindParam(':itemName', $itemName);
     $stmt->bindParam(':idShade', $idShade);
     $stmt->bindParam(':idBrand', $idBrand);
+    $stmt->bindParam(':idType', $idType);
+    $stmt->bindParam(':idPresentation', $idPresentation);
+    $stmt->bindParam(':idState', $idState);
+
 
 // insert a row
     
@@ -59,10 +67,20 @@ try {
     }
 
     echo "New records created successfully";
+    
+    /* Redirect browser
+     * see "Post/Redirect/Get"
+     * header("Location: http://localhost:8000/mira/mira-php/public/index.php");  
+     */
 }
 catch(PDOException $e)
 {
     echo "Error: " . $e->getMessage();
+    
+    /* Redirect browser
+     * header("Location: http://localhost:8000/mira/mira-php/input-form.php");   
+     */
+
 }
 $conn = null;
 

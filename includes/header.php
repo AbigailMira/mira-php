@@ -1,5 +1,4 @@
 <div class="jumbotron">
-	<h1>mira</h1>
-	<h2>Makeup In Random Access</h2>
-	<h2>Maquillage: Inspiration par la Randomisation des Articles</h2>
+	<h2>mira</h2>
+	<h3>Makeup In Random Access / Maquillage: Inspiration par la Randomisation des Articles</h3>
 </div>

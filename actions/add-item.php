@@ -13,14 +13,17 @@ try {
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	
 // insert new shade value into shade table, then select id
-        $shadeName = $_POST['shadeName'];
-
-        $stmt = $conn->prepare("INSERT INTO shade (sha_name) VALUES (:shadeName)");
-        $stmt->bindParam(':shadeName', $shadeName);
-
-        $stmt->execute();
-
-        $lastShadeId = $conn->query("SELECT idShade FROM shade where sha_name = '$shadeName'")->fetch();
+    $shadeName = $_POST['shadeName'];        
+    $shadeId = $conn->query("SELECT idShade FROM shade where sha_name = '$shadeName'")->fetch();
+    if ($shadeId == ""){
+       $stmt = $conn->prepare("INSERT INTO shade (sha_name) VALUES (:shadeName)");
+       $stmt->bindParam(':shadeName', $shadeName);
+       $stmt->execute();
+       $lastShadeId = $conn->query("SELECT idShade FROM shade where sha_name = '$shadeName'")->fetch(); 
+    }
+    else {
+       $lastShadeId = $shadeId;
+    }  
     
 // insert item info into item table
 // prepare sql and bind parameters    

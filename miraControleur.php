@@ -110,4 +110,48 @@ function getStyles()
         echo "Connection failed: " . $e->getMessage();
     }
 }
+/* 
+ * Requete pour sélectionner tous les blushs
+ */
+function getBlush() 
+{
+    global $conn;
+    try 
+    {
+        $blushes = $conn->query("SELECT * 
+                                    FROM item
+                                    JOIN shade
+                                    ON shade.idShade = item.fk_shade
+                                    WHERE fk_type = 3")->fetchAll();
+        return $blushes;
+    } 
+    catch (PDOException $e) 
+    {
+        echo "Connection failed: " . $e->getMessage();
+    }
+}
+/* 
+ * Requete pour sélectionner un "random" blush
+ */
+function getRandomBlush() 
+{
+    global $conn;
+    try 
+    {
+        $randomBlush = $conn->query("SELECT * 
+                                        FROM item  
+                                        JOIN shade
+                                        JOIN item_style
+                                        ON item.fk_shade = shade.idShade
+                                        AND item.idItem = item_style.fk_item
+                                        WHERE fk_type = 3 AND fk_style = 6
+                                        ORDER BY rand()
+                                        LIMIT 1")->fetch();
+        return $randomBlush;
+    } 
+    catch (PDOException $e) 
+    {
+        echo "Connection failed: " . $e->getMessage();
+    }
+}
 

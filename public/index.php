@@ -44,7 +44,7 @@
 	<p>Inventorize your makeup and make generate randomized and or thematic associations.</p>
 
         <a href="../input-form.php" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Input form</a>
-	<a href="" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Another page</a>
+        <a href="../pick-face.php" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Pick my face</a>
 </div>
 
 <?php include("../includes/footer.php");?>

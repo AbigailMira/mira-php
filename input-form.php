@@ -68,7 +68,19 @@
                     }
                   ?>
                 </select>
-              </div>      
+              </div>
+            <div class="col-sm-4">
+                <label for="packaging">Select packaging</label>
+                <select class="form-control" id="packaging" name="packaging" >
+                    <?php
+                    $packagings = getPackagings();
+                    echo "<option value=".""."selected>Please select</option>";
+                    foreach($packagings as $packaging) { 
+                    echo "<option value=".$packaging['idPackaging'].">".$packaging['pac_name']." </option>";
+                    }
+                  ?>
+                </select>
+              </div>
               <div class="col-sm-4" >
                 <label for="styles">Select style</label>
                 <select multiple class="form-control" id="styles" name="styles[]" >
@@ -168,6 +180,19 @@ $("#type").change(function() {
     });
 });
 
+$("#presentation").change(function() {
+    $.ajax({
+        type: "GET",
+        data:{"idPresentation":$("#presentation").val()},
+        url: "actions/ajax/packaging-par-presentation.php",
+        dataType: "json",
+        success: function(packagingParPresentation){
+            $("#packaging").empty();
+            $.each(packagingParPresentation, function(){
+                $("#packaging").append($("<option></option>").val(this['idPackaging']).html(this['pac_name']));
+            });
+        }
+    });
+});
 </script>
-
 </html>

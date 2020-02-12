@@ -59,6 +59,24 @@ function getPresentations()
 /* 
  * Requete pour sélectionner l'ensemble des marques (brand) enregistrées dans la db
  */
+function getPackagings() 
+{
+    global $conn;
+    try 
+    {
+        $packagings = $conn->query("SELECT * 
+                                  FROM packaging
+                                  ORDER BY pac_name ASC")->fetchAll();
+        return $packagings;
+    } 
+    catch (PDOException $e) 
+    {
+        echo "Connection failed: " . $e->getMessage();
+    }
+}
+/* 
+ * Requete pour sélectionner l'ensemble des marques (brand) enregistrées dans la db
+ */
 function getStates() 
 {
     global $conn;
@@ -92,24 +110,4 @@ function getStyles()
         echo "Connection failed: " . $e->getMessage();
     }
 }
-/* 
- * Requete pour sélectionner les présentations associées à des types d'items spécifiques
-*
-*function getPresentationPartype($idtype) 
-*{
-*    global $conn;
-*    try 
-*    {
-*        $presentationParType = $conn->query("SELECT idPresentation, pre_name 
-*                                                FROM `presentation`
-*                                                JOIN type_presentation
-*                                                ON presentation.idPresentation = type_presentation.fk_presentation_t
-*                                                WHERE type_presentation.fk_type_p = $idtype")->fetchAll();
-*        return $presentationParType;
-*    } 
-*    catch (PDOException $e) 
-*    {
-*        echo "Connection failed: " . $e->getMessage();
-*    }
-*}
-*/
+

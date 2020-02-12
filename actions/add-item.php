@@ -39,16 +39,18 @@ try {
     }    
     $idType = $_POST['type'];
     $idPresentation = $_POST['presentation'];
+    $idPackaging = $_POST['packaging'];
     $idState = $_POST['state'];
     
-    $stmt = $conn->prepare("INSERT INTO item (ite_name, fk_shade, fk_brand, fk_type, fk_presentation, fk_state) 
-                            VALUES (:itemName, :idShade, :idBrand, :idType, :idPresentation, :idState)");
+    $stmt = $conn->prepare("INSERT INTO item (ite_name, fk_shade, fk_brand, fk_type, fk_presentation,fk_packaging, fk_state) 
+                            VALUES (:itemName, :idShade, :idBrand, :idType, :idPresentation, :idPackaging, :idState)");
     
     $stmt->bindParam(':itemName', $itemName);
     $stmt->bindParam(':idShade', $idShade);
     $stmt->bindParam(':idBrand', $brandId[0]);
     $stmt->bindParam(':idType', $idType);
     $stmt->bindParam(':idPresentation', $idPresentation);
+    $stmt->bindParam(':idPackaging', $idPackaging);
     $stmt->bindParam(':idState', $idState);
 
 

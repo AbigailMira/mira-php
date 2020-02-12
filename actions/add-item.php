@@ -28,8 +28,15 @@ try {
 // insert item info into item table
 // prepare sql and bind parameters    
     $itemName = $_POST['itemName'];
-    $idShade = $lastShadeId[0];
-    $idBrand = $_POST['brand'];
+    $idShade = $lastShadeId[0];  
+    $brandName = $_POST['brand'];
+    $brandId = $conn->query("SELECT idBrand FROM brand where bra_name = '$brandName'")->fetch();
+    if ($brandId == ""){
+       $stmt = $conn->prepare("INSERT INTO brand (bra_name) VALUES (:brandName)");
+       $stmt->bindParam(':brandName', $brandName);
+       $stmt->execute();
+       $brandId = $conn->query("SELECT idBrand FROM brand where bra_name = '$brandName'")->fetch(); 
+    }    
     $idType = $_POST['type'];
     $idPresentation = $_POST['presentation'];
     $idState = $_POST['state'];
@@ -39,7 +46,7 @@ try {
     
     $stmt->bindParam(':itemName', $itemName);
     $stmt->bindParam(':idShade', $idShade);
-    $stmt->bindParam(':idBrand', $idBrand);
+    $stmt->bindParam(':idBrand', $brandId[0]);
     $stmt->bindParam(':idType', $idType);
     $stmt->bindParam(':idPresentation', $idPresentation);
     $stmt->bindParam(':idState', $idState);
@@ -70,8 +77,9 @@ try {
     
     /* Redirect browser
      * see "Post/Redirect/Get"
-     * header("Location: http://localhost:8000/mira/mira-php/public/index.php");  
      */
+     header("Location: http://localhost:8000/mira/mira-php/input-form.php");  
+     
 }
 catch(PDOException $e)
 {

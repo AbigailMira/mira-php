@@ -1,0 +1,45 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 7 févr. 2020, 13:59:30
+    Author     : mirac
+*/
+
+
+#main-content {
+        margin-top:20px;
+}
+.footer {
+        font-size: 14px;
+        text-align: center;
+}
+
+#brand-result {
+      display: none;
+      position: absolute;
+      margin-top: 1em;
+      z-index: 1;
+      left: -1px;
+      right: -1px;
+      border: solid 1px #CCC;
+      min-height: 50px;
+      max-height: 100px;
+      overflow: scroll;
+      list-style: none;
+      padding: 10px;
+      background-color: white;
+      
+      li {
+        padding: 5px;
+        margin: 0;
+        font-size: 13px;
+        
+        &:hover {
+          background: #EEE;
+          cursor: pointer;
+        }
+      }
+    }

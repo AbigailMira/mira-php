@@ -28,16 +28,19 @@
                         <input type="text" class="form-control" id="shade" name="shadeName" placeholder="example : Ivory">
                     </div>
                     <div class="col-sm-4">
-                        <label for="brand">Select brand</label>        
-                        <select class="form-control" id="brand" name="brand" >
-                            <?php
-                            $brands = getBrands();
-                            echo "<option value=".""."selected>Please select</option>";
-                            foreach($brands as $brand) { 
-                            echo "<option value=".$brand['idBrand'].">".$brand['bra_name']." </option>";
-                            }
-                          ?>
-                        </select>
+                        <label for="brand">Select brand</label>
+                        <input type="text" class="form-control" id="brand" name="brand" placeholder="example : Fenty Beauty">
+                        <ul id="brand-result"></ul>    
+<!--                        <select class="form-control" id="brand" name="brand" >
+                            //<?php
+//                            $brands = getBrands();
+//                            echo "<option value=".""."selected>Please select</option>";
+//                            foreach($brands as $brand) { 
+//                            echo "<option value=".$brand['idBrand'].">".$brand['bra_name']." </option>";
+//                            }
+//                          ?>
+                        </select>-->
+                        
                     </div>
               </div>
               
@@ -99,4 +102,72 @@
 <?php include("includes/footer.php");?>
 
 </body>
+
+<script type="text/javascript">
+//    $("#brand").keyup(function(){
+//        var search = $(this).val()
+//        $("#brand-result").empty();
+//        $("#brand-result").hide();
+//        if(search != ''){
+//            $.ajax({
+//                url: "actions/ajax/marque-search.php",
+//                method: "GET",
+//                data: {"value":search},
+//                success: function(data){
+//                    var result = JSON.parse(data);                    
+//                    for(var i=0; i<result.length; i++){
+//                        var brand_name = result[i]["bra_name"];
+//                        $("#brand-result").append("<li>"+brand_name+"</li>");
+//                    }
+//                    $("#brand-result").show();
+//                    $("#brand-result li").on('click', function(){
+//                        var selected_brand = $(this).text();
+//                        $("#brand").val(selected_brand);
+//                        $("#brand-result").empty();
+//                        $("#brand-result").hide();
+//                    })
+//                }
+//            })
+//        }
+//    })
+
+$("#brand").autocomplete({
+    minLength: 1,
+    source: function(request, response){
+        $.ajax({
+            url: "actions/ajax/marque-search.php",
+            method: "GET",
+            data: {"value":request.term},
+            success: function(data){
+                var formated_result = [];
+                var result = JSON.parse(data);                    
+                for(var i=0; i<result.length; i++){
+                    var brand_name = result[i]["bra_name"];
+                    formated_result.push(brand_name);
+                }
+                response(formated_result);
+            }
+        });
+    },
+    select: function(event, ui){        
+    }    
+});
+
+$("#type").change(function() {
+    $.ajax({
+        type: "GET",
+        data:{"idType":$("#type").val()},
+        url: "actions/ajax/presentation-par-type.php",
+        dataType: "json",
+        success: function(presentationParType){
+            $("#presentation").empty();
+            $.each(presentationParType, function(){
+                $("#presentation").append($("<option></option>").val(this['idPresentation']).html(this['pre_name']));
+            });
+        }
+    });
+});
+
+</script>
+
 </html>

@@ -11,43 +11,56 @@ require_once("../db_connect.php");
 try {   	
 // set the PDO error mode to exception
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	
+    
+// insert new line value into line table, then select id
+    $lineName = $_POST['line'];    
+    $stmt = $conn->prepare("SELECT idLine FROM line where lin_name = :lineName");
+    $stmt->execute(['lineName'=>$lineName]);
+    $lineId = $stmt->fetch();         
+    if ($lineId == ""){
+       $stmt = $conn->prepare("INSERT INTO line (lin_name) VALUES (:lineName)");
+       $stmt->bindParam(':lineName', $lineName);
+       $stmt->execute();
+       $lastLineId = $conn->query("SELECT LAST_INSERT_ID() FROM line")->fetch(); 
+    }
+    else {
+       $lastLineId = $lineId;
+    }      	
 // insert new shade value into shade table, then select id
-    $shadeName = $_POST['shadeName'];        
-    $shadeId = $conn->query("SELECT idShade FROM shade where sha_name = '$shadeName'")->fetch();
+    $shadeName = $_POST['shade'];     
+    $stmt = $conn->prepare("SELECT idShade FROM shade where sha_name = :shadeName");
+    $stmt->execute(['shadeName'=>$shadeName]);
+    $shadeId = $stmt->fetch();     
     if ($shadeId == ""){
        $stmt = $conn->prepare("INSERT INTO shade (sha_name) VALUES (:shadeName)");
        $stmt->bindParam(':shadeName', $shadeName);
        $stmt->execute();
-       $lastShadeId = $conn->query("SELECT idShade FROM shade where sha_name = '$shadeName'")->fetch(); 
+       $lastShadeId = $conn->query("SELECT LAST_INSERT_ID() FROM shade")->fetch(); 
     }
     else {
        $lastShadeId = $shadeId;
-    }  
-    
-// insert item info into item table
-// prepare sql and bind parameters    
-    $itemName = $_POST['itemName'];
-    $idShade = $lastShadeId[0];  
+    }       
+// insert new brand value into brand table, then select id
     $brandName = $_POST['brand'];
     $brandId = $conn->query("SELECT idBrand FROM brand where bra_name = '$brandName'")->fetch();
     if ($brandId == ""){
        $stmt = $conn->prepare("INSERT INTO brand (bra_name) VALUES (:brandName)");
        $stmt->bindParam(':brandName', $brandName);
        $stmt->execute();
-       $brandId = $conn->query("SELECT idBrand FROM brand where bra_name = '$brandName'")->fetch(); 
+       $lastbrandId = $conn->query("SELECT LAST_INSERT_ID() FROM brand")->fetch(); 
     }    
+// get id for Type, Presentation, Packaging, State
     $idType = $_POST['type'];
     $idPresentation = $_POST['presentation'];
     $idPackaging = $_POST['packaging'];
     $idState = $_POST['state'];
     
-    $stmt = $conn->prepare("INSERT INTO item (ite_name, fk_shade, fk_brand, fk_type, fk_presentation,fk_packaging, fk_state) 
-                            VALUES (:itemName, :idShade, :idBrand, :idType, :idPresentation, :idPackaging, :idState)");
+    $stmt = $conn->prepare("INSERT INTO item (fk_line, fk_shade, fk_brand, fk_type, fk_presentation,fk_packaging, fk_state) 
+                            VALUES (:idLine, :idShade, :idBrand, :idType, :idPresentation, :idPackaging, :idState)");
     
-    $stmt->bindParam(':itemName', $itemName);
-    $stmt->bindParam(':idShade', $idShade);
-    $stmt->bindParam(':idBrand', $brandId[0]);
+    $stmt->bindParam(':idLine', $lastLineId[0]);
+    $stmt->bindParam(':idShade', $lastShadeId[0]);
+    $stmt->bindParam(':idBrand', $lastbrandId[0]);
     $stmt->bindParam(':idType', $idType);
     $stmt->bindParam(':idPresentation', $idPresentation);
     $stmt->bindParam(':idPackaging', $idPackaging);

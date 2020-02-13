@@ -20,12 +20,12 @@
                 
               <div class="form-group row">
                     <div class="col-sm-4">
-                        <label for="itemName">Item name</label>
-                        <input type="text" class="form-control" id="itemName" name="itemName" placeholder="example : Match Stix">
+                        <label for="line">Item line or collection</label>
+                        <input type="text" class="form-control" id="line" name="line" placeholder="example : Match Stix, November 2018 Visage">
                     </div>
                     <div class="col-sm-4">
                         <label for="shade">Item shade</label>
-                        <input type="text" class="form-control" id="shade" name="shadeName" placeholder="example : Ivory">
+                        <input type="text" class="form-control" id="shade" name="shade" placeholder="example : Ivory">
                     </div>
                     <div class="col-sm-4">
                         <label for="brand">Select brand</label>

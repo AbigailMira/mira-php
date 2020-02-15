@@ -42,7 +42,9 @@ try {
     }       
 // insert new brand value into brand table, then select id
     $brandName = $_POST['brand'];
-    $brandId = $conn->query("SELECT idBrand FROM brand where bra_name = '$brandName'")->fetch();
+    $stmt = $conn->prepare("SELECT idBrand FROM brand where bra_name = ':brandName'");
+    $stmt->execute(['brandName'=>$brandName]);
+    $brandId = $stmt->fetch();     
     if ($brandId == ""){
        $stmt = $conn->prepare("INSERT INTO brand (bra_name) VALUES (:brandName)");
        $stmt->bindParam(':brandName', $brandName);

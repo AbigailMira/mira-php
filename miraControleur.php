@@ -3,6 +3,24 @@
 require_once("db_connect.php");
 
 /* 
+ * Requete pour sélectionner l'ensemble des items enregistrées dans la db
+ */
+function getItems() 
+{
+    global $conn;
+    try 
+    {
+        $items = $conn->query("SELECT * 
+                                  FROM item
+                                  ORDER BY bra_name ASC")->fetchAll();
+        return $items;
+    } 
+    catch (PDOException $e) 
+    {
+        echo "Connection failed: " . $e->getMessage();
+    }
+}
+/* 
  * Requete pour sélectionner l'ensemble des marques (brand) enregistrées dans la db
  */
 function getBrands() 
@@ -131,7 +149,7 @@ function getBlush()
     }
 }
 /* 
- * Requete pour sélectionner un "random" blush
+ * Requete pour sélectionner un "random" blush de style geek
  */
 function getRandomBlush() 
 {
@@ -148,6 +166,32 @@ function getRandomBlush()
                                         ORDER BY rand()
                                         LIMIT 1")->fetch();
         return $randomBlush;
+    } 
+    catch (PDOException $e) 
+    {
+        echo "Connection failed: " . $e->getMessage();
+    }
+}
+/* 
+ * Requete pour sélectionner un "random" item de style :?
+ */
+function getRandomByTypeAndStyle($idType, $idStyle) 
+{
+    global $conn;
+    try 
+    {
+        $randomByTypeAndStyle = $conn->query("SELECT * 
+                                        FROM item  
+                                        JOIN shade
+                                        JOIN item_style
+                                        JOIN type
+                                        ON item.fk_shade = shade.idShade
+                                        AND item.idItem = item_style.fk_item
+                                        AND item.fk_type = type.idType
+                                        WHERE fk_type = $idType AND fk_style = $idStyle
+                                        ORDER BY rand()
+                                        LIMIT 1")->fetch();
+        return $randomByTypeAndStyle;
     } 
     catch (PDOException $e) 
     {

@@ -17,12 +17,16 @@
     <div class ="row">
         <div class="col">
             <?php
-            $randomBlush = getRandomBlush();           
-            echo "<ul>
-                <li>
-                    Blush : ".$randomBlush['sha_name'];
-                echo "</li>
-            </ul>";
+            $types = getTypes();
+            foreach ($types as $t){
+                $geeky = getRandomByTypeAndStyle($t['idType'], 6);
+                if ($geeky['typ_name'] != ""){
+                    echo "<ul>
+                        <li>".$geeky['typ_name']." : ".$geeky['sha_name'];
+                        echo "</li>
+                    </ul>";
+                }
+            }
             ?>
         </div> 
     </div>        

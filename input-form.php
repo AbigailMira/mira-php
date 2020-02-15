@@ -30,17 +30,7 @@
                     <div class="col-sm-4">
                         <label for="brand">Select brand</label>
                         <input type="text" class="form-control" id="brand" name="brand" placeholder="example : Fenty Beauty">
-                        <ul id="brand-result"></ul>    
-<!--                        <select class="form-control" id="brand" name="brand" >
-                            //<?php
-//                            $brands = getBrands();
-//                            echo "<option value=".""."selected>Please select</option>";
-//                            foreach($brands as $brand) { 
-//                            echo "<option value=".$brand['idBrand'].">".$brand['bra_name']." </option>";
-//                            }
-//                          ?>
-                        </select>-->
-                        
+                        <ul id="brand-result"></ul>                          
                     </div>
               </div>
               
